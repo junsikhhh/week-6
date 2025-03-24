@@ -27,6 +27,6 @@ public class Comment {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String content;  // 댓글 내용
 
-    @Column(nullable = false)
+    @Column(nullable = false, updatable = false, insertable = false)
     private LocalDateTime createdAt;  // 작성일
 }

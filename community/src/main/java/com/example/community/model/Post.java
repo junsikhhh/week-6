@@ -30,7 +30,7 @@ public class Post {
     private String imageUrl;  // 첨부 이미지 URL
 
     @Column(nullable = false, updatable = false, insertable = false)
-    private LocalDateTime createdAt ;  // 작성일
+    private LocalDateTime createdAt;  // 작성일
 
     @Column(nullable = false, columnDefinition = "INT DEFAULT 0", insertable = false)
     private int likeCount;  // 좋아요 수

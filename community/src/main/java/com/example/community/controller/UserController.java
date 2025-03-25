@@ -20,6 +20,5 @@ public class UserController {
     @PutMapping("/me")
     public ResponseEntity<ApiResponse<Void>> updateProfile(@RequestBody UpdateMemberRequestDto request,
                                                            @AuthenticationPrincipal UserDetails userDetails) {
-        authService.
     }
 }

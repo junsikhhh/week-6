@@ -6,8 +6,9 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class UpdateMemberRequestDto {
+public class UpdateUserRequestDto {
     @NotBlank
     private String nickname;
-    private String profileImageUrl; // Optinoal
+
+    boolean imageDeleted;
 }

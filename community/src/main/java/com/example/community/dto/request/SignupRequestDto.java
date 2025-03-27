@@ -21,5 +21,4 @@ public class SignupRequestDto {
     @Size(max = 10)
     private String nickname;
 
-    private String profileImageUrl;
 }

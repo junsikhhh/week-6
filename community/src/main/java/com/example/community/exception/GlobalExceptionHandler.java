@@ -33,6 +33,13 @@ public class GlobalExceptionHandler {
                 .body(ApiErrorResponse.of("user_not_found", List.of(e.getMessage())));
     }
 
+    @ExceptionHandler(ImageUploadException.class)
+    public ResponseEntity<ApiErrorResponse> handleImageUpload(ImageUploadException e) {
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(ApiErrorResponse.of("image_upload_failed", List.of(e.getMessage())));
+    }
+
     // 그 외 예외 처리
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiErrorResponse> handleGlobalException(Exception e) {

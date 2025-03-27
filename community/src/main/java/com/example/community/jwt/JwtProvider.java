@@ -14,28 +14,30 @@ public class JwtProvider {
 
     private final long EXPIRATION = 1000L * 60 * 60 * 24; // 24시간
 
-    public String generateToken(String email) {
+    public String generateToken(Long userId) {
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + EXPIRATION);
         return Jwts.builder()
-                .setSubject(email)
+                .setSubject("access_token")
+                .claim("userId", userId)
                 .setIssuedAt(now)
                 .setExpiration(expiryDate)
                 .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
     }
 
-    public String extractEmail(String token) {
-        return Jwts.parser()
+    public Long extractUserId(String token) {
+        return Jwts.parserBuilder()
                 .setSigningKey(secretKey)
+                .build()
                 .parseClaimsJws(token)
                 .getBody()
-                .getSubject();
+                .get("userId", Long.class);
     }
 
     public boolean validateToken(String token) {
         try {
-            Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
+            Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token);
             return true;
         } catch (Exception e) {
             return false;

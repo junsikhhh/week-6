@@ -1,17 +1,18 @@
 package com.example.community.model;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Table(name = "comments")
-public class Comment {
+public class Comment extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,11 +23,8 @@ public class Comment {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private User user;  // 댓글 작성자
+    private Member member;  // 댓글 작성자
 
     @Column(nullable = false, columnDefinition = "TEXT")
     private String content;  // 댓글 내용
-
-    @Column(nullable = false, updatable = false, insertable = false)
-    private LocalDateTime createdAt;  // 작성일
 }

@@ -1,6 +1,7 @@
 package com.example.community.dto.response;
 
 import com.example.community.model.Comment;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,18 +10,20 @@ import java.time.LocalDateTime;
 
 @Getter
 @Builder
+@AllArgsConstructor
 public class CommentResponseDto {
-    private Long id;
+    private Long commentId;
     private String content;
-    private String author;
     private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
-    public static CommentResponseDto fromEntity(Comment comment) {
-        return CommentResponseDto.builder()
-                .id(comment.getId())
-                .author(comment.getUser().getNickname())
-                .content(comment.getContent())
-                .createdAt(comment.getCreatedAt())
-                .build();
+    private AuthorInfo author;
+
+    @Getter
+    @Builder
+    @AllArgsConstructor
+    public static class AuthorInfo {
+        private String nickname;
+        private String profileImageUrl;
     }
 }

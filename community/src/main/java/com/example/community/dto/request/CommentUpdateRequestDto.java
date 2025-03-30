@@ -1,16 +1,12 @@
 package com.example.community.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class CommentCreateRequestDto {
-    @NotNull
-    private Long postId;
-
+public class CommentUpdateRequestDto {
     @NotBlank
     private String content;
 }

@@ -14,4 +14,11 @@ public class UserGuardUtil {
         return memberRepository.findByIdAndDeletedFalse(userId)
                 .orElseThrow(() -> new IllegalArgumentException("탈퇴했거나 존재하지 않는 사용자입니다."));
     }
+
+    public static Member getActiveUser(Member member) {
+        if (member == null || member.isDeleted()) {
+            throw new IllegalArgumentException("탈퇴했거나 존재하지 않는 사용자입니다.");
+        }
+        return member;
+    }
 }

@@ -2,7 +2,7 @@ package com.example.community.service;
 
 import com.example.community.dto.request.LoginRequestDto;
 import com.example.community.dto.request.SignupRequestDto;
-import com.example.community.dto.response.TokenResponseDto;
+import com.example.community.dto.response.LoginResponseDto;
 import com.example.community.exception.ImageUploadException;
 import com.example.community.global.enums.UploadType;
 import com.example.community.jwt.JwtProvider;
@@ -13,8 +13,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
 
 @Service
 @RequiredArgsConstructor
@@ -55,7 +53,8 @@ public class AuthService {
         return memberRepository.save(member).getId();
     }
 
-    public TokenResponseDto login(LoginRequestDto request) {
+    @Transactional(readOnly = true)
+    public LoginResponseDto login(LoginRequestDto request) {
         Member member = memberRepository.findByEmailAndDeletedFalse(request.getEmail())
                 .orElseThrow(() -> new IllegalArgumentException("계정을 찾을 수 없습니다."));
 
@@ -64,6 +63,12 @@ public class AuthService {
         }
 
         String accessToken = jwtProvider.generateToken(member.getId());
-        return new TokenResponseDto(accessToken);
+        return LoginResponseDto.builder()
+                .accessToken(accessToken)
+                .userInfo(LoginResponseDto.UserInfo.builder()
+                        .userId(member.getId())
+                        .profileImageUrl(member.getProfileImageUrl())
+                        .build())
+                .build();
     }
 }

@@ -3,7 +3,7 @@ package com.example.community.controller;
 import com.example.community.dto.request.LoginRequestDto;
 import com.example.community.dto.request.SignupRequestDto;
 import com.example.community.dto.response.ApiResponse;
-import com.example.community.dto.response.TokenResponseDto;
+import com.example.community.dto.response.LoginResponseDto;
 import com.example.community.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -33,8 +33,8 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<ApiResponse<TokenResponseDto>> login(@RequestBody LoginRequestDto request) {
-        TokenResponseDto token = authService.login(request);
+    public ResponseEntity<ApiResponse<LoginResponseDto>> login(@RequestBody LoginRequestDto request) {
+        LoginResponseDto token = authService.login(request);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(ApiResponse.success("login_success", token));
     }

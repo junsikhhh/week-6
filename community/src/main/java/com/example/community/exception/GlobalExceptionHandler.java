@@ -26,11 +26,11 @@ public class GlobalExceptionHandler {
                 .body(ApiErrorResponse.of("invalid_credentials", List.of(e.getMessage())));
     }
 
-    @ExceptionHandler(UserNotFoundException.class)
-    public ResponseEntity<ApiErrorResponse> handleUserNotFound(UserNotFoundException e) {
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<ApiErrorResponse> handleNotFound(NotFoundException e) {
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
-                .body(ApiErrorResponse.of("user_not_found", List.of(e.getMessage())));
+                .body(ApiErrorResponse.of("not_found", List.of(e.getMessage())));
     }
 
     @ExceptionHandler(ImageUploadException.class)
@@ -38,6 +38,13 @@ public class GlobalExceptionHandler {
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(ApiErrorResponse.of("image_upload_failed", List.of(e.getMessage())));
+    }
+
+    @ExceptionHandler(ForbiddenException.class)
+    public ResponseEntity<ApiErrorResponse> handleForbidden(ForbiddenException e) {
+        return ResponseEntity
+                .status(HttpStatus.FORBIDDEN)
+                .body(ApiErrorResponse.of("forbidden", List.of(e.getMessage())));
     }
 
     // 그 외 예외 처리

@@ -1,5 +1,6 @@
 package com.example.community.controller;
 
+import com.example.community.dto.request.PasswordChangeRequestDto;
 import com.example.community.dto.request.UpdateUserRequestDto;
 import com.example.community.dto.response.ApiResponse;
 import com.example.community.dto.response.UserProfileResponseDto;
@@ -37,5 +38,25 @@ public class UserController {
         UserProfileResponseDto response = userService.updateUser(userId, request, image);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(ApiResponse.success("update_success", response));
+    }
+
+    @PatchMapping("/password")
+    public ResponseEntity<ApiResponse<Void>> changePassword(
+            @AuthenticationPrincipal UserDetailsImpl userDetails,
+            @RequestBody PasswordChangeRequestDto request
+    ) {
+        Long userId = userDetails.getMember().getId();
+        userService.changePassword(userId, request.getPassword());
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(ApiResponse.success("password_updated", null));
+    }
+
+    @DeleteMapping("/me")
+    public ResponseEntity<ApiResponse<Void>> deleteAccount(
+            @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        Long userId = userDetails.getMember().getId();
+        userService.deleteAccount(userId);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(ApiResponse.success("account_deleted", null));
     }
 }

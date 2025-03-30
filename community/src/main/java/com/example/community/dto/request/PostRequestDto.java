@@ -6,12 +6,9 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class PostRequestDto {
+public class PostCreateRequestDto {
     @NotBlank
     private String title;
-
     @NotBlank
     private String content;
-
-    private String imageUrl;
 }

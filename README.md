@@ -1,2 +1,1 @@
-# 2-teddy-hwang-week-6
-6주차 과제: Spring Boot 프로젝트 생성
+커뮤니티 서비스: Spring Boot 프로젝트 생성
